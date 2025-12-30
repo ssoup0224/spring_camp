@@ -24,4 +24,13 @@ public class DefaultController {
         model.addAttribute("result", result);
         return "multiple";
     }
+
+    @RequestMapping("/string")
+    public String multiple(@RequestParam String a, @RequestParam String b, Model model) {
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+        String result = a + b;
+        model.addAttribute("result", result);
+        return "string";
+    }
 }
