@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>list</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body>
+<h1>List</h1>
+<div id="div_list">
+</div>
+<button onclick="list_board()">List</button>
+
+<script>
+    function list_board(){
+        //alert("create");
+
+        $.ajax({
+            url: '/api/board/list',
+            method: 'GET',
+            data : {
+
+            },
+            success: function (data, status, xhr) {
+                alert("success : " + JSON.stringify(data));
+                // let result_code = data["result_code"];
+                let list = data["list"];
+                for(let each of list) {
+                    $("#div_list").append(
+                        // "<div>"+each["id"] + "//" + each["title"]+"</div>"
+                        `<div onclick="location.href='/board/detail?id=${each["id"]}'">${each["id"]} : ${each["title"]}</div>`
+                    );
+
+                }
+                alert(result_code);
+            },
+            error: function (data, status, err) {
+            },
+            complete: function () {
+
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

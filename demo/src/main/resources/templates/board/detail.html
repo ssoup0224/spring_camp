@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+
+<body>
+    detail
+    <div>
+        id: <input id="input_id" /> <br />
+        createdAt: <span id="text_createdAt"></span> <br />
+        title: <input id="input_title" /> <br />
+        content: <input id="input_content" /> <br />
+        author: <input id="input_author" /> <br />
+    </div>
+
+    <button onclick="detail_board()">detail</button>
+
+    <script>
+        function detail_board() {
+            //alert("create");
+
+            $.ajax({
+                url: '/api/board/detail',
+                method: 'GET',
+                data: {
+                    id: $("#input_id").val()
+                },
+                success: function (data, status, xhr) {
+                    alert("success : " + JSON.stringify(data));
+                    let board = data["list"]
+                    $("#input_title").val(board["title"]);
+                    $("#input_content").val(board["content"]);
+                    $("#input_author").val(board["author"]);
+                    $("#text_createdAt").html(board["createdAt"]);
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
