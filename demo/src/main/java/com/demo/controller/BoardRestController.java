@@ -49,10 +49,10 @@ public class BoardRestController {
         return map_result2;
     }
 
-    @RequestMapping("/detail/{id}")
-    public Map<String, Object> detail(@PathVariable String id) {
+    @RequestMapping("/detail")
+    public Map<String, Object> detail(@RequestParam Map<String, Object> params) {
 
-        // String id = (String) params.get("id");
+        String id = (String) params.get("id");
 
         Map<String, Object> map_board = null;
         for (Map<String, Object> each : list) {
@@ -68,5 +68,35 @@ public class BoardRestController {
         map_result2.put("list", map_board);
 
         return map_result2;
+    }
+
+    @RequestMapping("/update")
+    public Map<String, Object> update(@RequestParam Map<String, Object> params) {
+
+        String id = (String) params.get("id");
+
+        Map<String, Object> map_board = null;
+        for (Map<String, Object> each : list) {
+            String tempId = each.get("id") + "";
+            if (tempId.equals(id)) {
+                map_board = each;
+            }
+        }
+        if (map_board != null) {
+            String title = (String) params.get("title");
+            if (title != null)
+                map_board.put("title", title);
+            String content = (String) params.get("content");
+            if (content != null)
+                map_board.put("content", content);
+            String author = (String) params.get("author");
+            if (author != null)
+                map_board.put("author", author);
+        }
+
+        Map<String, Object> map_result = new HashMap<>();
+        map_result.put("result_code", 200);
+
+        return map_result;
     }
 }

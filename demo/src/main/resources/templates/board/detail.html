@@ -18,11 +18,10 @@
     </div>
 
     <button onclick="detail_board()">detail</button>
+    <button onclick="update_board()">update</button>
 
     <script>
         function detail_board() {
-            //alert("create");
-
             $.ajax({
                 url: '/api/board/detail',
                 method: 'GET',
@@ -36,6 +35,27 @@
                     $("#input_content").val(board["content"]);
                     $("#input_author").val(board["author"]);
                     $("#text_createdAt").html(board["createdAt"]);
+                },
+                error: function (data, status, err) {
+                },
+                complete: function () {
+
+                }
+            });
+        }
+
+        function update_board() {
+            $.ajax({
+                url: '/api/board/update',
+                method: 'GET',
+                data: {
+                    id: $("#input_id").val(),
+                    title: $("#input_title").val(),
+                    content: $("#input_content").val(),
+                    author: $("#input_author").val()
+                },
+                success: function (data, status, xhr) {
+                    alert("success : " + JSON.stringify(data));
                 },
                 error: function (data, status, err) {
                 },
