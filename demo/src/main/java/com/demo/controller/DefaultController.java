@@ -7,13 +7,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DefaultController {
-    @RequestMapping("/index")
-    public String index(@RequestParam int a, @RequestParam int b, Model model) {
-        System.out.println("a: " + a);
-        System.out.println("b: " + b);
-        int result = a + b;
-        model.addAttribute("result", result);
+    // 요청한 URL이 변하지 않음
+    // @RequestMapping({ "", "/", "/index"})
+    // public String index(@RequestParam int a, @RequestParam int b, Model model) {
+    // System.out.println("a: " + a);
+    // System.out.println("b: " + b);
+    // int result = a + b;
+    // model.addAttribute("result", result);
+    // return "index";
+    // }
+
+    // 요청한 URL을 redirect 하기
+    @RequestMapping({ "", "/" })
+    public String index() {
         return "index";
+    }
+
+    @RequestMapping("/index")
+    public String index2() {
+        // return "redirect:/";
+        return "redirect:/multiple?a=1&b=2";
     }
 
     @RequestMapping("/multiple")
@@ -26,7 +39,7 @@ public class DefaultController {
     }
 
     @RequestMapping("/string")
-    public String multiple(@RequestParam String a, @RequestParam String b, Model model) {
+    public String stringConcat(@RequestParam String a, @RequestParam String b, Model model) {
         System.out.println("a: " + a);
         System.out.println("b: " + b);
         String result = a + b;

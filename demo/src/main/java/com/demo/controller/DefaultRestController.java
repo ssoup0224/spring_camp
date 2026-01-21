@@ -27,4 +27,15 @@ public class DefaultRestController {
         return map;
     }
 
+    @RequestMapping("/multiply")
+    public Map<String, Object> multiply(ParamTest params) {
+        Map<String, Object> map = new HashMap<>();
+        int p1 = Integer.parseInt(params.getParam1());
+        int p2 = Integer.parseInt(params.getParam2());
+        map.put("param1", p1);
+        map.put("param2", p2);
+        map.put("result", p1 * p2);
+        return map;
+    }
+
 }
