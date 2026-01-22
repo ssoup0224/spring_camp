@@ -10,46 +10,63 @@
 <body>
     detail
     <div>
-        id: <input id="input_id" /> <br />
+        id: <span id="text_id"></span> <br />
         createdAt: <span id="text_createdAt"></span> <br />
         title: <input id="input_title" /> <br />
         content: <input id="input_content" /> <br />
         author: <input id="input_author" /> <br />
     </div>
 
-    <button onclick="detail_board()">detail</button>
+    <!-- <button onclick="detail_board()">detail</button> -->
     <button onclick="update_board()">update</button>
 
     <script>
+        // let tempHref = location.href; // http://localhost:8080/board/detail?id=2
+        // let id = tempHref.split("=")[1]; // using @RequestParam
+        // or
+        // let tempHref = location.href; // http://localhost:8080/board/detail/2 // 2?a=2
+        // let arrayHref = tempHref.split("/"); // using @PathVariable
+        // let id = arrayHref[arrayHref.length - 1]; // 2?a=2
+        // // how to get rid of '?a=2'
+        // arrayHref = location.href.split("?");
+        // if (arrayHref.length > 1) { id = arrayHref[0]; }
+
+        let tempHref = location.href.split("?")[0];
+        let arrayHref = tempHref.split("/");
+        let id = arrayHref[arrayHref.length - 1];
+
+        $(function () {
+            detail_board();
+        });
+
         function detail_board() {
             $.ajax({
-                url: '/api/board/detail',
+                // url: '/api/board/detail', // for @PathVariable: url: '/api/board/detail/' + tempId,
+                url: '/api/board/detail/' + id,
                 method: 'GET',
-                data: {
-                    id: $("#input_id").val()
-                },
                 success: function (data, status, xhr) {
                     alert("success : " + JSON.stringify(data));
-                    let board = data["list"]
-                    $("#input_title").val(board["title"]);
-                    $("#input_content").val(board["content"]);
-                    $("#input_author").val(board["author"]);
-                    $("#text_createdAt").html(board["createdAt"]);
+                    let board = data["list"];
+                    if (board) {
+                        $("#input_title").val(board["title"]);
+                        $("#input_content").val(board["content"]);
+                        $("#input_author").val(board["author"]);
+                        $("#text_createdAt").html(board["createdAt"]);
+                    }
                 },
                 error: function (data, status, err) {
-                },
-                complete: function () {
-
+                    alert("error: " + err);
                 }
             });
         }
 
         function update_board() {
             $.ajax({
-                url: '/api/board/update',
+                // url: '/api/board/update',
+                url: '/api/board/update/' + id,
                 method: 'GET',
                 data: {
-                    id: $("#input_id").val(),
+                    // id: $("#text_id").val(),
                     title: $("#input_title").val(),
                     content: $("#input_content").val(),
                     author: $("#input_author").val()
@@ -58,9 +75,7 @@
                     alert("success : " + JSON.stringify(data));
                 },
                 error: function (data, status, err) {
-                },
-                complete: function () {
-
+                    alert("error: " + err);
                 }
             });
         }

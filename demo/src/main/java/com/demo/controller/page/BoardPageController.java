@@ -12,7 +12,7 @@ public class BoardPageController {
         return "board/create";
     }
 
-    @RequestMapping("/detail")
+    @RequestMapping("/detail/{id}")
     public String detail() {
         return "board/detail";
     }

@@ -49,10 +49,8 @@ public class BoardRestController {
         return map_result2;
     }
 
-    @RequestMapping("/detail")
-    public Map<String, Object> detail(@RequestParam Map<String, Object> params) {
-
-        String id = (String) params.get("id");
+    @RequestMapping("/detail/{id}")
+    public Map<String, Object> detail(@PathVariable String id) {
 
         Map<String, Object> map_board = null;
         for (Map<String, Object> each : list) {
@@ -70,16 +68,15 @@ public class BoardRestController {
         return map_result2;
     }
 
-    @RequestMapping("/update")
-    public Map<String, Object> update(@RequestParam Map<String, Object> params) {
-
-        String id = (String) params.get("id");
+    @RequestMapping("/update/{id}")
+    public Map<String, Object> update(@PathVariable String id, @RequestParam Map<String, Object> params) {
 
         Map<String, Object> map_board = null;
         for (Map<String, Object> each : list) {
             String tempId = each.get("id") + "";
             if (tempId.equals(id)) {
                 map_board = each;
+                break;
             }
         }
         if (map_board != null) {
