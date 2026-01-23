@@ -2,6 +2,7 @@ package com.demo.controller;
 
 import com.demo.service.BoardService;
 import com.demo.service.impl.BoardServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/board")
 public class BoardRestController {
 
     // @Autowired // 이렇게도 가능하지만, 우리는 생성자 방식만 사용할 예정
     final BoardService boardService;
     // 생성자 방식으로 보드 서비스 주입!
-    public BoardRestController(BoardService boardService) {
-        this.boardService = boardService;
-    }
+//    public BoardRestController(BoardService boardService) {
+//        this.boardService = boardService;
+//    }
 
     @GetMapping("/create")
     public Map<String, Object> create(@RequestParam Map<String, Object> params) {
