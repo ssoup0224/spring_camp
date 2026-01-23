@@ -1,9 +1,6 @@
 package com.demo.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class BoardRestController {
     List<Map<String, Object>> list = new ArrayList<>();
     int id = 0;
 
-    @RequestMapping("/create")
+    @GetMapping("/create")
     public Map<String, Object> create(@RequestParam Map<String, Object> params) {
         String title = (String) params.get("title");
         String content = (String) params.get("content");
@@ -39,7 +36,7 @@ public class BoardRestController {
         return map_result;
     }
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public Map<String, Object> list(@RequestParam Map<String, Object> params) {
 
         Map<String, Object> map_result2 = new HashMap<>();
@@ -49,7 +46,7 @@ public class BoardRestController {
         return map_result2;
     }
 
-    @RequestMapping("/detail/{id}")
+    @GetMapping("/detail/{id}")
     public Map<String, Object> detail(@PathVariable String id) {
 
         Map<String, Object> map_board = null;
@@ -68,7 +65,7 @@ public class BoardRestController {
         return map_result2;
     }
 
-    @RequestMapping("/update/{id}")
+    @GetMapping("/update/{id}")
     public Map<String, Object> update(@PathVariable String id, @RequestParam Map<String, Object> params) {
 
         Map<String, Object> map_board = null;
