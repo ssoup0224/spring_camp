@@ -1,5 +1,8 @@
 package com.demo.controller;
 
+import com.demo.service.BoardService;
+import com.demo.service.impl.BoardServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -12,85 +15,35 @@ import java.util.Map;
 @RequestMapping("/api/board")
 public class BoardRestController {
 
-    // 임시 정보 저장
-    List<Map<String, Object>> list = new ArrayList<>();
-    int id = 0;
+    // @Autowired // 이렇게도 가능하지만, 우리는 생성자 방식만 사용할 예정
+    final BoardService boardService;
+    // 생성자 방식으로 보드 서비스 주입!
+    public BoardRestController(BoardService boardService) {
+        this.boardService = boardService;
+    }
 
     @GetMapping("/create")
     public Map<String, Object> create(@RequestParam Map<String, Object> params) {
-        String title = (String) params.get("title");
-        String content = (String) params.get("content");
-        String author = (String) params.get("author");
-
-        // 아이디 값
-        params.put("id", ++id);
-        LocalDateTime now = LocalDateTime.now();
-        params.put("createdAt", now);
-
-        list.add(params);
-        System.out.println(list.toString());
-
-        Map<String, Object> map_result = new HashMap<>();
-        map_result.put("result_code", 200);
-
-        return map_result;
+        return boardService.create(params);
     }
 
     @GetMapping("/list")
     public Map<String, Object> list(@RequestParam Map<String, Object> params) {
-
-        Map<String, Object> map_result2 = new HashMap<>();
-        map_result2.put("result_code", 200);
-        map_result2.put("list", list);
-
-        return map_result2;
+        return boardService.list();
     }
 
     @GetMapping("/detail/{id}")
-    public Map<String, Object> detail(@PathVariable String id) {
-
-        Map<String, Object> map_board = null;
-        for (Map<String, Object> each : list) {
-            String tempId = each.get("id") + "";
-            if (tempId.equals(id)) {
-                map_board = each;
-                break;
-            }
-        }
-
-        Map<String, Object> map_result2 = new HashMap<>();
-        map_result2.put("result_code", 200);
-        map_result2.put("list", map_board);
-
-        return map_result2;
+    public Map<String, Object> detail(@PathVariable int id) {
+        return boardService.detail(id);
     }
 
     @GetMapping("/update/{id}")
-    public Map<String, Object> update(@PathVariable String id, @RequestParam Map<String, Object> params) {
+    public void update(@PathVariable int id, @RequestParam Map<String, Object> params) {
+        boardService.update(id, params);
+    }
 
-        Map<String, Object> map_board = null;
-        for (Map<String, Object> each : list) {
-            String tempId = each.get("id") + "";
-            if (tempId.equals(id)) {
-                map_board = each;
-                break;
-            }
-        }
-        if (map_board != null) {
-            String title = (String) params.get("title");
-            if (title != null)
-                map_board.put("title", title);
-            String content = (String) params.get("content");
-            if (content != null)
-                map_board.put("content", content);
-            String author = (String) params.get("author");
-            if (author != null)
-                map_board.put("author", author);
-        }
-
-        Map<String, Object> map_result = new HashMap<>();
-        map_result.put("result_code", 200);
-
-        return map_result;
+    @GetMapping("/delete/{id}")
+    public void delete(@PathVariable int id) {
+        boardService.delete(id);
     }
 }

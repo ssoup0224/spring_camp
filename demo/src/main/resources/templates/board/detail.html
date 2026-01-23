@@ -19,6 +19,7 @@
 
     <!-- <button onclick="detail_board()">detail</button> -->
     <button onclick="update_board()">update</button>
+    <button onclick="delete_board()">delete</button>
 
     <script>
         // let tempHref = location.href; // http://localhost:8080/board/detail?id=2
@@ -73,6 +74,20 @@
                 },
                 success: function (data, status, xhr) {
                     alert("success : " + JSON.stringify(data));
+                },
+                error: function (data, status, err) {
+                    alert("error: " + err);
+                }
+            });
+        }
+        function delete_board() {
+            $.ajax({
+                // url: '/api/board/update',
+                url: '/api/board/delete/' + id,
+                method: 'GET',
+                success: function (data, status, xhr) {
+                    alert("success : " + JSON.stringify(data));
+                    detail_board();
                 },
                 error: function (data, status, err) {
                     alert("error: " + err);
