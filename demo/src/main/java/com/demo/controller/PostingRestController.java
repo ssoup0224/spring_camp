@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/posting")
@@ -35,4 +33,31 @@ public class PostingRestController {
         return map_result;
     }
 
+    @GetMapping("/list")
+    public Map<String, Object> list(){
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        // Method 1
+//        Set<Integer> keys = postings.keySet();
+//        Object[] array_key = keys.toArray();
+//        Arrays.sort(array_key);
+//
+//        for(Object key : array_key){
+//            list.add((Map<String, Object>) postings.get(key));
+//        }
+
+        // Method 2
+        for(int i=0; i<sequence; i++){
+           Object posting = postings.get(i);
+           if(posting != null) list.add((Map<String, Object>) posting);
+        }
+
+        Map<String, Object> map_result = new HashMap<>();
+        map_result.put("status", 200);
+        map_result.put("data", list);
+
+        System.out.println("map_result : " + map_result);
+
+        return map_result;
+    }
 }
