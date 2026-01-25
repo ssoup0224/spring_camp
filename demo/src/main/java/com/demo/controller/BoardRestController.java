@@ -18,7 +18,7 @@ import java.util.Map;
 public class BoardRestController {
 
     // @Autowired // 이렇게도 가능하지만, 우리는 생성자 방식만 사용할 예정
-    final BoardService boardService;
+    private final BoardService boardService;
     // 생성자 방식으로 보드 서비스 주입!
 //    public BoardRestController(BoardService boardService) {
 //        this.boardService = boardService;
