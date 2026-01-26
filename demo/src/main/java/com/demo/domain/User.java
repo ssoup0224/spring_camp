@@ -20,7 +20,8 @@ public class User extends AuditingFields {
     Integer gender; // 10 : female, 20 : male
 
     protected User() {}
-    private User(String username, String password, String name, String nickname, String phone, String birthday, Integer gender) {
+    private User(Boolean deleted, String username, String password, String name, String nickname, String phone, String birthday, Integer gender) {
+        this.deleted = deleted;
         this.username = username;
         this.password = password;
         this.name = name;
@@ -31,7 +32,7 @@ public class User extends AuditingFields {
     }
 
     public static User of(String username, String password, String name, String nickname, String phone, String birthday, Integer gender) {
-        return new User(username, password, name, nickname, phone, birthday, gender);
+        return new User(false, username, password, name, nickname, phone, birthday, gender);
     }
 
     public DefaultDto.CreateResponseDto toCreateResponseDto() {

@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserService {
 
         return UserDto.DetailResponseDto.builder()
                 .id(user.getId())
+                .deleted(user.getDeleted())
+                .createdAt(user.getCreatedAt())
+                .modifiedAt(user.getModifiedAt())
                 .username(user.getUsername())
                 .name(user.getName())
                 .nickname(user.getNickname())
