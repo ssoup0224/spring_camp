@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import com.demo.dto.DefaultDto;
 import com.demo.dto.PostingDto;
 import com.demo.service.PostingService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class PostingRestController {
 //    int sequence = 1;
 
     @PostMapping("")
-    public ResponseEntity<PostingDto.CreateResponseDto> create(@RequestBody PostingDto.CreateRequestDto param) {
+    public ResponseEntity<DefaultDto.CreateResponseDto> create(@RequestBody PostingDto.CreateRequestDto param) {
         // return postingService.create(param);
         return ResponseEntity.status(HttpStatus.CREATED).body(postingService.create(param));
     }
@@ -31,7 +32,7 @@ public class PostingRestController {
     }
 
     @GetMapping("")
-    public ResponseEntity<PostingDto.DetailResponseDto> detail(PostingDto.DetailRequestDto param) {
+    public ResponseEntity<PostingDto.DetailResponseDto> detail(DefaultDto.DetailRequestDto param) {
         return ResponseEntity.ok(postingService.detail(param));
     }
 

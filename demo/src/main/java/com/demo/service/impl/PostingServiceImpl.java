@@ -1,6 +1,7 @@
 package com.demo.service.impl;
 
 import com.demo.domain.Posting;
+import com.demo.dto.DefaultDto;
 import com.demo.dto.PostingDto;
 import com.demo.repository.PostingRepository;
 import com.demo.service.PostingService;
@@ -19,7 +20,7 @@ public class PostingServiceImpl implements PostingService {
     private final PostingRepository postingRepository;
 
     @Override
-    public PostingDto.CreateResponseDto create(PostingDto.CreateRequestDto param) {
+    public DefaultDto.CreateResponseDto create(PostingDto.CreateRequestDto param) {
         return postingRepository.save(param.toEntity()).toCreateResponseDto();
     }
 
@@ -43,7 +44,7 @@ public class PostingServiceImpl implements PostingService {
     }
 
     @Override
-    public PostingDto.DetailResponseDto detail(PostingDto.DetailRequestDto param) {
+    public PostingDto.DetailResponseDto detail(DefaultDto.DetailRequestDto param) {
         Posting posting = postingRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException("not data found"));
 
         return toResponseDto(posting);
@@ -64,11 +65,12 @@ public class PostingServiceImpl implements PostingService {
     public PostingDto.DetailResponseDto toResponseDto(Posting posting) {
         PostingDto.DetailResponseDto res = new PostingDto.DetailResponseDto();
         res.setId(posting.getId());
+        res.setDeleted(posting.getDeleted());
         res.setTitle(posting.getTitle());
         res.setContent(posting.getContent());
         res.setAuthor(posting.getAuthor());
         res.setCreatedAt(posting.getCreatedAt());
-        res.setModifiedAt(posting.getModifedAt());
+        res.setModifiedAt(posting.getModifiedAt());
         return res;
     }
 }

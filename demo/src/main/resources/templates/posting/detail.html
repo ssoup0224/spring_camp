@@ -9,6 +9,7 @@
 
 <body>
     POSTING DETAIL <br />
+    deleted: <input class="input_param" id="input_deleted" name="deleted" readonly /> <br />
     id: <input class="input_param" id="input_id" name="id" readonly /> <br />
     createdAt: <input class="input_param" id="input_createdAt" name="createdAt" readonly /> <br />
     title: <input class="input_param" id="input_title" name="title" /> <br />
@@ -83,7 +84,9 @@
                 url: '/api/posting',
                 method: 'DELETE',
                 contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(tempId),
+                data: JSON.stringify({
+                    id: tempId
+                }),
                 success: function (data, status, xhr) {
                     let result_status = data["status"];
                     alert("success : " + JSON.stringify(data));

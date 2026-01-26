@@ -25,7 +25,7 @@ public class AuditingFields {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @LastModifiedDate
-    LocalDateTime modifedAt;
+    LocalDateTime modifiedAt;
 
     Boolean deleted;
 }

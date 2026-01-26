@@ -2,6 +2,7 @@ package com.demo.dto;
 
 import com.demo.domain.Posting;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -20,38 +21,23 @@ public class PostingDto {
 
     @Getter
     @Setter
-    @Builder
-    public static class CreateResponseDto {
-        Long id;
-    }
-
-    @Getter
-    @Setter
-    @Builder
+    @SuperBuilder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UpdateRequestDto {
-        Long id;
+    public static class UpdateRequestDto extends DefaultDto.UpdateRequestDto {
         String title;
         String content;
         String author;
-        Boolean deleted;
     }
 
     @Getter
     @Setter
-    public static class DetailRequestDto {
-        Long id;
-    }
-
-    @Getter
-    @Setter
-    public static class DetailResponseDto {
-        Long id;
+    @SuperBuilder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class DetailResponseDto extends DefaultDto.DetailResponseDto{
         String title;
         String content;
         String author;
-        LocalDateTime createdAt;
-        LocalDateTime modifiedAt;
     }
 }
