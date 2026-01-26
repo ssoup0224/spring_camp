@@ -34,8 +34,12 @@ gender: <select class="input_param" id="input_gender" name="gender">
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(_param),
             success: function (data, status, xhr) {
-                let result_status = data["status"];
-                alert("success : " + JSON.stringify(data));
+                if (data["id"] + "" === "-100") {
+                    alert("username already exists");
+                } else {
+                    alert("create user success");
+                    location.href = "/user/login";
+                }
             },
             error: function (data, status, err) {
             },
