@@ -2,6 +2,7 @@ package com.demo.domain;
 
 import com.demo.dto.DefaultDto;
 import com.demo.dto.UserDto;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User extends AuditingFields {
-    String username;
+    @Column(unique = true, nullable = false)
+    String username; // 사용자 ID, Not null, unique
     String password;
 
     String name;
