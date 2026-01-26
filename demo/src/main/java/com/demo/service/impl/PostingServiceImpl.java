@@ -1,11 +1,13 @@
 package com.demo.service.impl;
 
 import com.demo.domain.Posting;
+import com.demo.dto.PostingDto;
 import com.demo.repository.PostingRepository;
 import com.demo.service.PostingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,64 +19,76 @@ public class PostingServiceImpl implements PostingService {
     private final PostingRepository postingRepository;
 
     @Override
-    public Map<String, Object> create(Map<String, Object> map) {
+    public PostingDto.CreateResponseDto create(PostingDto.CreateRequestDto param) {
         Posting posting = new Posting();
         // Long id = Long.parseLong(map.get("id").toString());
-        String title = map.get("title") + "";
-        String content = map.get("content") + "";
-        String author = map.get("author") + "";
+        String title = param.getTitle();
+        String content = param.getContent();
+        String author = param.getAuthor();
         // posting.setId(id);
         posting.setTitle(title);
         posting.setContent(content);
         posting.setAuthor(author);
         postingRepository.save(posting);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("result_code", 200);
-        result.put("id", posting.getId());
-        return result;
+        PostingDto.CreateResponseDto res = new PostingDto.CreateResponseDto();
+        res.setId(posting.getId());
+        return res;
     }
 
     @Override
-    public void update(Map<String, Object> map) {
-        Long id = Long.parseLong(map.get("id") + "");
+    public void update(PostingDto.UpdateRequestDto param) {
+        Long id = param.getId();
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("not data found"));
 
-        if (map.get("title") != null) {
-            posting.setTitle(map.get("title") + "");
+        if (param.getTitle() != null) {
+            posting.setTitle(param.getTitle());
         }
-        if (map.get("content") != null) {
-            posting.setContent(map.get("content") + "");
+        if (param.getContent() != null) {
+            posting.setContent(param.getContent());
         }
-        if (map.get("author") != null) {
-            posting.setAuthor(map.get("author") + "");
+        if (param.getAuthor() != null) {
+            posting.setAuthor(param.getAuthor());
         }
         postingRepository.save(posting);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(PostingDto.UpdateRequestDto param) {
+        Long id = param.getId();
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("not data found"));
         postingRepository.delete(posting);
     }
 
     @Override
-    public Map<String, Object> detail(Long id) {
+    public PostingDto.DetailResponseDto detail(PostingDto.DetailRequestDto param) {
+        Long id = param.getId();
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("not data found"));
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("result_code", 200);
-        result.put("data", posting);
-        return result;
+        PostingDto.DetailResponseDto res = toResponseDto(posting);
+        return res;
     }
 
     @Override
-    public Map<String, Object> list() {
+    public List<PostingDto.DetailResponseDto> list() {
         List<Posting> list = postingRepository.findAll();
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("result_code", 200);
-        result.put("data", list);
-        return result;
+        List<PostingDto.DetailResponseDto> returnList = new ArrayList<>();
+        for(Posting each : list) {
+            PostingDto.DetailResponseDto res = toResponseDto(each);
+            returnList.add(res);
+        }
+        return returnList;
+    }
+
+    public PostingDto.DetailResponseDto toResponseDto(Posting posting) {
+        PostingDto.DetailResponseDto res = new PostingDto.DetailResponseDto();
+        res.setId(posting.getId());
+        res.setTitle(posting.getTitle());
+        res.setContent(posting.getContent());
+        res.setAuthor(posting.getAuthor());
+        res.setCreatedAt(posting.getCreatedAt());
+        res.setModifiedAt(posting.getModifedAt());
+        return res;
     }
 }

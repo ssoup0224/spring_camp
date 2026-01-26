@@ -22,7 +22,7 @@
                 success: function (data, status, xhr) {
                     //let result_status = data["status"];
                     alert("success : " + JSON.stringify(data));
-                    let tempList = data["data"];
+                    let tempList = data;
                     for (let each of tempList) {
                         $("#div_list").append(
                             `<div onclick="location.href = '/posting/detail/${each["id"]}'">${each["id"]} : ${each["title"]}</div>`

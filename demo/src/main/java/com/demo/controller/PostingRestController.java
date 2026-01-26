@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import com.demo.dto.PostingDto;
 import com.demo.service.PostingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,27 +18,27 @@ public class PostingRestController {
 //    int sequence = 1;
 
     @PostMapping("")
-    public Map<String, Object> create(@RequestBody Map<String, Object> map) {
-        return postingService.create(map);
+    public PostingDto.CreateResponseDto create(@RequestBody PostingDto.CreateRequestDto param) {
+        return postingService.create(param);
     }
 
     @GetMapping("/list")
-    public Map<String, Object> list() {
+    public List<PostingDto.DetailResponseDto> list() {
         return postingService.list();
     }
 
     @GetMapping("")
-    public Map<String, Object> detail(@RequestParam Long id) {
-        return postingService.detail(id);
+    public PostingDto.DetailResponseDto detail(PostingDto.DetailRequestDto param) {
+        return postingService.detail(param);
     }
 
     @PutMapping("")
-    public void update(@RequestBody Map<String, Object> map) {
-        postingService.update(map);
+    public void update(@RequestBody PostingDto.UpdateRequestDto param) {
+        postingService.update(param);
     }
 
     @DeleteMapping("")
-    public void delete(@RequestBody Long id) {
-        postingService.delete(id);
+    public void delete(@RequestBody PostingDto.UpdateRequestDto param) {
+        postingService.delete(param);
     }
 }
