@@ -19,6 +19,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public DefaultDto.CreateResponseDto create(UserDto.CreateRequestDto param) {
+        User user = userRepository.findByUsername(param.getUsername());
+        if (user != null) {
+            // Method 1
+            // throw new RuntimeException("User already exists");
+            // Method 2
+            return DefaultDto.CreateResponseDto.builder().id((long)-100).build();
+        }
         return userRepository.save(param.toEntity()).toCreateResponseDto();
     }
 
