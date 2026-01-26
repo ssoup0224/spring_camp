@@ -17,18 +17,18 @@ public class UserRestController {
     final UserService userService;
 
     @PostMapping("")
-    public ResponseEntity<DefaultDto.CreateResponseDto> create(UserDto.CreateRequestDto param) {
+    public ResponseEntity<DefaultDto.CreateResponseDto> create(@RequestBody UserDto.CreateRequestDto param) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(param));
     }
 
     @PutMapping("")
-    public ResponseEntity<Void> update(UserDto.UpdateRequestDto param) {
+    public ResponseEntity<Void> update(@RequestBody UserDto.UpdateRequestDto param) {
         userService.update(param);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("")
-    public ResponseEntity<Void> delete(UserDto.UpdateRequestDto param) {
+    public ResponseEntity<Void> delete(@RequestBody UserDto.UpdateRequestDto param) {
         userService.delete(param);
         return ResponseEntity.ok().build();
     }
