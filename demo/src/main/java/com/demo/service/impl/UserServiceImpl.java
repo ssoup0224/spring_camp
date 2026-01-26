@@ -63,6 +63,6 @@ public class UserServiceImpl implements UserService {
                 .phone(user.getPhone())
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
-                .build();;
+                .build();
     }
 }
