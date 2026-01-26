@@ -1,5 +1,6 @@
 package com.demo.domain;
 
+import com.demo.dto.PostingDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +24,25 @@ public class Posting extends AuditingFields {
     // 이 메서드를 통해서만 엔티티의 인스턴스 만들기
     public static Posting of(String title, String content, String author) {
         return new Posting(title, content, author);
+    }
+
+    // create하고난 후, 해야 할 일
+    public PostingDto.CreateResponseDto toCreateResponseDto() {
+        return PostingDto.CreateResponseDto.builder().id(getId()).build();
+    }
+
+    public void update(PostingDto.UpdateRequestDto param) {
+        if (param.getTitle() != null) {
+            setTitle(param.getTitle());
+        }
+        if (param.getContent() != null) {
+            setContent(param.getContent());
+        }
+        if (param.getAuthor() != null) {
+            setAuthor(param.getAuthor());
+        }
+        if (param.getDeleted() != null) {
+            setDeleted(param.getDeleted());
+        }
     }
 }

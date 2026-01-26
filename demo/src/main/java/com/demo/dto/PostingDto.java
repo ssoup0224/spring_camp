@@ -1,7 +1,7 @@
 package com.demo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.demo.domain.Posting;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,21 +12,30 @@ public class PostingDto {
         String title;
         String content;
         String author;
+
+        public Posting toEntity() {
+            return Posting.of(title, content, author);
+        }
     }
 
     @Getter
     @Setter
+    @Builder
     public static class CreateResponseDto {
         Long id;
     }
 
     @Getter
     @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class UpdateRequestDto {
         Long id;
         String title;
         String content;
         String author;
+        Boolean deleted;
     }
 
     @Getter

@@ -20,20 +20,7 @@ public class PostingServiceImpl implements PostingService {
 
     @Override
     public PostingDto.CreateResponseDto create(PostingDto.CreateRequestDto param) {
-        Posting posting = new Posting();
-        // Long id = Long.parseLong(map.get("id").toString());
-        String title = param.getTitle();
-        String content = param.getContent();
-        String author = param.getAuthor();
-        // posting.setId(id);
-        posting.setTitle(title);
-        posting.setContent(content);
-        posting.setAuthor(author);
-        postingRepository.save(posting);
-
-        PostingDto.CreateResponseDto res = new PostingDto.CreateResponseDto();
-        res.setId(posting.getId());
-        return res;
+        return postingRepository.save(param.toEntity()).toCreateResponseDto();
     }
 
     @Override
@@ -41,32 +28,25 @@ public class PostingServiceImpl implements PostingService {
         Long id = param.getId();
         Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("not data found"));
 
-        if (param.getTitle() != null) {
-            posting.setTitle(param.getTitle());
-        }
-        if (param.getContent() != null) {
-            posting.setContent(param.getContent());
-        }
-        if (param.getAuthor() != null) {
-            posting.setAuthor(param.getAuthor());
-        }
+        posting.update(param);
         postingRepository.save(posting);
     }
 
     @Override
     public void delete(PostingDto.UpdateRequestDto param) {
-        Long id = param.getId();
-        Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("not data found"));
-        postingRepository.delete(posting);
+        // 완전삭제
+//        Long id = param.getId();
+//        Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("not data found"));
+//        postingRepository.delete(posting);
+        // soft delete
+        update(PostingDto.UpdateRequestDto.builder().id(param.getId()).deleted(true).build());
     }
 
     @Override
     public PostingDto.DetailResponseDto detail(PostingDto.DetailRequestDto param) {
-        Long id = param.getId();
-        Posting posting = postingRepository.findById(id).orElseThrow(() -> new RuntimeException("not data found"));
+        Posting posting = postingRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException("not data found"));
 
-        PostingDto.DetailResponseDto res = toResponseDto(posting);
-        return res;
+        return toResponseDto(posting);
     }
 
     @Override
