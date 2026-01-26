@@ -7,8 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter
-public class User extends AuditingFields{
+@Getter
+@Setter
+public class User extends AuditingFields {
     String username;
     String password;
 
@@ -38,17 +39,20 @@ public class User extends AuditingFields{
     }
 
     public void update(UserDto.UpdateRequestDto param) {
-        if(param.getPassword() != null) {
+        if (param.getPassword() != null) {
             setPassword(param.getPassword());
         }
-        if(param.getName() != null) {
+        if (param.getName() != null) {
             setName(param.getName());
         }
-        if(param.getNickname() != null) {
+        if (param.getNickname() != null) {
             setNickname(param.getNickname());
         }
-        if(param.getPhone() != null) {
+        if (param.getPhone() != null) {
             setPhone(param.getPhone());
+        }
+        if (param.getDeleted() != null) {
+            setDeleted(param.getDeleted());
         }
     }
 }

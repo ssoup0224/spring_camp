@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserPageController {
-    @GetMapping("/${page}")
+    @GetMapping("/{page}")
     public String page(@PathVariable String page) {
         return "user/" + page;
     }
 
-    @GetMapping("/${page}/{id}")
+    @GetMapping("/{page}/{id}")
     public String page2(@PathVariable String page, @PathVariable Long id) {
         return "user/" + page;
     }

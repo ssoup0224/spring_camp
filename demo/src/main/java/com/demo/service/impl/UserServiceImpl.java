@@ -6,9 +6,6 @@ import com.demo.dto.UserDto;
 import com.demo.repository.UserRepository;
 import com.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,10 +43,10 @@ public class UserServiceImpl implements UserService {
     public List<UserDto.DetailResponseDto> list() {
         List<User> list = userRepository.findAll();
         List<UserDto.DetailResponseDto> res = new ArrayList<>();
-        for(User each : list) {
+        for (User each : list) {
             res.add(get(each.getId()));
         }
-        return List.of();
+        return res;
     }
 
     public UserDto.DetailResponseDto get(Long id) {
