@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public UserDto.DetailResponseDto get(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 
-        UserDto.DetailResponseDto res = UserDto.DetailResponseDto.builder()
+        return UserDto.DetailResponseDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .name(user.getName())
@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService {
                 .phone(user.getPhone())
                 .birthday(user.getBirthday())
                 .gender(user.getGender())
-                .build();
-        return res;
+                .build();;
     }
 }
