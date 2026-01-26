@@ -3,6 +3,8 @@ package com.demo.controller;
 import com.demo.dto.PostingDto;
 import com.demo.service.PostingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -18,27 +20,31 @@ public class PostingRestController {
 //    int sequence = 1;
 
     @PostMapping("")
-    public PostingDto.CreateResponseDto create(@RequestBody PostingDto.CreateRequestDto param) {
-        return postingService.create(param);
+    public ResponseEntity<PostingDto.CreateResponseDto> create(@RequestBody PostingDto.CreateRequestDto param) {
+        // return postingService.create(param);
+        return ResponseEntity.status(HttpStatus.CREATED).body(postingService.create(param));
     }
 
     @GetMapping("/list")
-    public List<PostingDto.DetailResponseDto> list() {
-        return postingService.list();
+    public ResponseEntity<List<PostingDto.DetailResponseDto>> list() {
+        return ResponseEntity.ok(postingService.list());
     }
 
     @GetMapping("")
-    public PostingDto.DetailResponseDto detail(PostingDto.DetailRequestDto param) {
-        return postingService.detail(param);
+    public ResponseEntity<PostingDto.DetailResponseDto> detail(PostingDto.DetailRequestDto param) {
+        return ResponseEntity.ok(postingService.detail(param));
     }
 
     @PutMapping("")
-    public void update(@RequestBody PostingDto.UpdateRequestDto param) {
+    public ResponseEntity<Void> update(@RequestBody PostingDto.UpdateRequestDto param) {
+
         postingService.update(param);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("")
-    public void delete(@RequestBody PostingDto.UpdateRequestDto param) {
+    public ResponseEntity<Void> delete(@RequestBody PostingDto.UpdateRequestDto param) {
         postingService.delete(param);
+        return ResponseEntity.ok().build();
     }
 }
