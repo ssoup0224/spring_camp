@@ -16,11 +16,12 @@ public class UserDto {
         String password;
         String name;
         String nickname;
+        String phone;
         String birthday;
         Integer gender;
 
         public User toEntity() {
-            return User.of(username, password, name, nickname, birthday, gender);
+            return User.of(username, password, name, nickname, phone, birthday, gender);
         }
     }
 
@@ -30,6 +31,7 @@ public class UserDto {
         String password;
         String name;
         String nickname;
+        String phone;
     }
 
     @Getter @Setter @SuperBuilder
@@ -38,6 +40,7 @@ public class UserDto {
         String username;
         String name;
         String nickname;
+        String phone;
         String birthday;
         Integer gender;
     }
