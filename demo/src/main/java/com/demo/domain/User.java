@@ -13,6 +13,7 @@ import lombok.Setter;
 public class User extends AuditingFields {
     @Column(unique = true, nullable = false)
     String username; // 사용자 ID, Not null, unique
+    @Column(nullable = false)
     String password;
 
     String name;

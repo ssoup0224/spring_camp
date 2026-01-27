@@ -10,6 +10,8 @@ import java.util.List;
 
 @Service
 public interface UserService {
+    DefaultDto.CreateResponseDto login(UserDto.LoginRequestDto param);
+
     DefaultDto.CreateResponseDto create(UserDto.CreateRequestDto param);
     void update(UserDto.UpdateRequestDto userDto);
     void delete(UserDto.UpdateRequestDto userDto);

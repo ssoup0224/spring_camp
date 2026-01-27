@@ -11,6 +11,13 @@ import lombok.experimental.SuperBuilder;
 public class UserDto {
     @Getter
     @Setter
+    public static class LoginRequestDto {
+        String username;
+        String password;
+    }
+
+    @Getter
+    @Setter
     public static class CreateRequestDto {
         String username;
         String password;

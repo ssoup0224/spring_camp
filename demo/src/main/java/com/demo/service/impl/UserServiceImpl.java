@@ -18,6 +18,28 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public DefaultDto.CreateResponseDto login(UserDto.LoginRequestDto param) {
+        // Method 1
+//        User user = userRepository.findByUsername(param.getUsername());
+//        if (user != null && user.getPassword().equals(param.getPassword())) {
+//            return DefaultDto.CreateResponseDto.builder().id(user.getId()).build(); // 로그인 성공
+//        }
+
+        // Method 2 (using without Optional)
+        User user = userRepository.findByUsernameAndPassword(param.getUsername(), param.getPassword());
+        if (user != null) {
+            return DefaultDto.CreateResponseDto.builder().id(user.getId()).build();
+        }
+
+        return DefaultDto.CreateResponseDto.builder().id((long) -200).build(); // 로그인 실패
+
+        // Method 3 (using Optional in repository)
+//        User user = userRepository.findByUsernameAndPassword(param.getUsername(), param.getPassword()).orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        return DefaultDto.CreateResponseDto.builder().id(user.getId()).build();
+    }
+
+    @Override
     public DefaultDto.CreateResponseDto create(UserDto.CreateRequestDto param) {
         User user = userRepository.findByUsername(param.getUsername());
         if (user != null) {
