@@ -3,6 +3,7 @@ package com.demo.service.impl;
 import com.demo.domain.User;
 import com.demo.dto.DefaultDto;
 import com.demo.dto.UserDto;
+import com.demo.mapper.UserMapper;
 import com.demo.repository.UserRepository;
 import com.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public DefaultDto.CreateResponseDto login(UserDto.LoginRequestDto param) {
@@ -70,28 +72,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto.DetailResponseDto> list() {
-        List<User> list = userRepository.findAll();
-        List<UserDto.DetailResponseDto> res = new ArrayList<>();
-        for (User each : list) {
-            res.add(get(each.getId()));
-        }
+//        List<User> list = userRepository.findAll();
+//        List<UserDto.DetailResponseDto> res = new ArrayList<>();
+//        for (User each : list) {
+//            res.add(get(each.getId()));
+//        }
+        List<UserDto.DetailResponseDto> res = userMapper.list();
         return res;
     }
 
     public UserDto.DetailResponseDto get(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-
-        return UserDto.DetailResponseDto.builder()
-                .id(user.getId())
-                .deleted(user.getDeleted())
-                .createdAt(user.getCreatedAt())
-                .modifiedAt(user.getModifiedAt())
-                .username(user.getUsername())
-                .name(user.getName())
-                .nickname(user.getNickname())
-                .phone(user.getPhone())
-                .birthday(user.getBirthday())
-                .gender(user.getGender())
-                .build();
+//
+//        return UserDto.DetailResponseDto.builder()
+//                .id(user.getId())
+//                .deleted(user.getDeleted())
+//                .createdAt(user.getCreatedAt())
+//                .modifiedAt(user.getModifiedAt())
+//                .username(user.getUsername())
+//                .name(user.getName())
+//                .nickname(user.getNickname())
+//                .phone(user.getPhone())
+//                .birthday(user.getBirthday())
+//                .gender(user.getGender())
+//                .build();
+        UserDto.DetailResponseDto res = userMapper.detail(user.getId());
+        return res;
     }
 }
