@@ -1,66 +1,51 @@
 package com.demo.dto;
 
-import com.demo.domain.User;
+import com.demo.domain.Postingimg;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
-
-public class UserDto {
-
-    @Getter @Setter
-    public static class LoginReqDto {
-        String username;
-        String password;
-    }
+public class PostingimgDto {
 
     /**/
 
     @Getter
     @Setter
+    @SuperBuilder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class CreateReqDto {
-        String username;
-        String password;
-        String name;
-        String nickname;
-        String phone;
-        String birth;
-        Integer gender;
+        Long postingId;
+        String img;
 
-        public User toEntity() {
-            return User.of(username, password, name, nickname, phone, birth, gender);
+        public Postingimg toEntity() {
+            return Postingimg.of(postingId, img);
         }
     }
     @Getter @Setter @SuperBuilder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class UpdateReqDto extends DefaultDto.UpdateReqDto {
-        String password;
-        String name;
-        String nickname;
-        String phone;
+        String img;
     }
     @Getter @Setter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
     public static class DetailResDto extends DefaultDto.DetailResDto {
-        String username;
-        String name;
-        String nickname;
-        String phone;
-        String birth;
-        Integer gender;
+        Long postingId;
+        String img;
     }
 
     @Getter @Setter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
+    public static class ListReqDto extends DefaultDto.ListReqDto {
+        Long postingId;
+    }
+    @Getter @Setter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
     public static class PagedListReqDto extends DefaultDto.PagedListReqDto {
-        String username;
-        String name;
+        Long postingId;
     }
     @Getter @Setter @SuperBuilder @NoArgsConstructor @AllArgsConstructor
     public static class ScrolledListReqDto extends DefaultDto.ScrolledListReqDto {
-        String username;
-        String name;
+        Long postingId;
     }
 }

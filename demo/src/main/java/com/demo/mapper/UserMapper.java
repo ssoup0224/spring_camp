@@ -1,11 +1,13 @@
 package com.demo.mapper;
 
 import com.demo.dto.UserDto;
-
 import java.util.List;
 
 public interface UserMapper {
-    // 조회 하는데 사용될 디오
-    UserDto.DetailResponseDto detail(Long id);
-    List<UserDto.DetailResponseDto> list();
+    //조회 하는데 사용될 다오!
+    UserDto.DetailResDto detail(Long id);
+    List<UserDto.DetailResDto> list();
+    int listCount(UserDto.PagedListReqDto param);
+    List<UserDto.DetailResDto> pagedList(UserDto.PagedListReqDto param);
+    List<UserDto.DetailResDto> scrolledList(UserDto.ScrolledListReqDto param);
 }

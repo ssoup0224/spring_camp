@@ -2,21 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>create</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body>
-USER LOGIN <br />
-username: <input type="text" class="input_param" id="input_username" name="username" /> <br />
-password: <input type="password" class="input_param" id="input_password" name="password" /> <br />
+USER LOGIN<br />
+username : <input type="text" class="input_param" id="input_username" name="username" /> <br />
+password : <input type="password" class="input_param" id="input_password" name="password"/> <br />
 
-<button onclick="login_user()">Login</button>
+<br />
+<button onclick="login_user()">LOGIN</button>
 
 <script>
-    function login_user() {
+    function login_user(){
         let _param = {};
         let input_param = $(".input_param");
-        for (let each of input_param) {
+        for(let each of input_param){
             let tempName = $(each).attr("name");
             _param[tempName] = $(each).val();
         }
@@ -24,16 +25,16 @@ password: <input type="password" class="input_param" id="input_password" name="p
         $.ajax({
             url: '/api/user/login',
             method: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(_param),
+            contentType : 'application/json; charset=utf-8',
+            data : JSON.stringify(_param),
             success: function (data, status, xhr) {
-                // alert(JSON.stringify(data));
-                if (data["id"]>0) {
-                    alert("Login Success");
-                    localStorage.setItem("user_id", data["id"]);
+                //alert(JSON.stringify(data));
+                if(data["id"] > 0){
+                    alert("로그인 성공!");
+                    localStorage.setItem("myUserId", data["id"]);
                     location.replace("/index");
                 } else {
-                    alert("Login Failed");
+                    alert("로그인 실패!");
                 }
             },
             error: function (data, status, err) {
@@ -43,5 +44,6 @@ password: <input type="password" class="input_param" id="input_password" name="p
         });
     }
 </script>
+
 </body>
 </html>

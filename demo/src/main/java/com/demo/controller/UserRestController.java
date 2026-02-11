@@ -4,49 +4,52 @@ import com.demo.dto.DefaultDto;
 import com.demo.dto.UserDto;
 import com.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
+@RestController
 public class UserRestController {
     final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<DefaultDto.CreateResponseDto> login(@RequestBody UserDto.LoginRequestDto param) {
+    public ResponseEntity<DefaultDto.CreateResDto> login(@RequestBody UserDto.LoginReqDto param) {
         return ResponseEntity.ok(userService.login(param));
     }
-
+    /**/
     @PostMapping("")
-    public ResponseEntity<DefaultDto.CreateResponseDto> create(@RequestBody UserDto.CreateRequestDto param) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(param));
+    public ResponseEntity<DefaultDto.CreateResDto> create(@RequestBody UserDto.CreateReqDto param) {
+        return ResponseEntity.ok(userService.create(param));
     }
-
     @PutMapping("")
-    public ResponseEntity<Void> update(@RequestBody UserDto.UpdateRequestDto param) {
+    public ResponseEntity<Void> update(@RequestBody UserDto.UpdateReqDto param) {
         userService.update(param);
         return ResponseEntity.ok().build();
     }
-
     @DeleteMapping("")
-    public ResponseEntity<Void> delete(@RequestBody UserDto.UpdateRequestDto param) {
+    public ResponseEntity<Void> delete(@RequestBody UserDto.UpdateReqDto param) {
         userService.delete(param);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<UserDto.DetailResponseDto>> list() {
-        return ResponseEntity.ok(userService.list());
-    }
-
     @GetMapping("")
-    public ResponseEntity<UserDto.DetailResponseDto> detail(DefaultDto.DetailRequestDto param) {
+    public ResponseEntity<UserDto.DetailResDto> detail(DefaultDto.DetailReqDto param) {
         return ResponseEntity.ok(userService.detail(param));
     }
-
+    @GetMapping("/list")
+    public ResponseEntity<List<UserDto.DetailResDto>> list() {
+        return ResponseEntity.ok(userService.list());
+    }
+    @GetMapping("/pagedList")
+    public ResponseEntity<DefaultDto.PagedListResDto> pagedList(UserDto.PagedListReqDto param) {
+        return ResponseEntity.ok(userService.pagedList(param));
+    }
+    @GetMapping("/scrolledList")
+    public ResponseEntity<List<UserDto.DetailResDto>> scrolledList(UserDto.ScrolledListReqDto param) {
+        return ResponseEntity.ok(userService.scrolledList(param));
+    }
 
 }

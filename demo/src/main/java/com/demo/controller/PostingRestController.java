@@ -11,41 +11,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RequiredArgsConstructor
-@RestController
 @RequestMapping("/api/posting")
+@RestController
 public class PostingRestController {
 
-    private final PostingService postingService;
-
-//    Map<Integer, Map<String, Object>> postings = new HashMap<>();
-//    int sequence = 1;
+    final PostingService postingService;
 
     @PostMapping("")
-    public ResponseEntity<DefaultDto.CreateResponseDto> create(@RequestBody PostingDto.CreateRequestDto param) {
-        // return postingService.create(param);
-        return ResponseEntity.status(HttpStatus.CREATED).body(postingService.create(param));
+    public ResponseEntity<DefaultDto.CreateResDto> create(@RequestBody PostingDto.CreateReqDto param) {
+        return ResponseEntity.ok(postingService.create(param));
     }
-
-    @GetMapping("/list")
-    public ResponseEntity<List<PostingDto.DetailResponseDto>> list() {
-        return ResponseEntity.ok(postingService.list());
-    }
-
-    @GetMapping("")
-    public ResponseEntity<PostingDto.DetailResponseDto> detail(DefaultDto.DetailRequestDto param) {
-        return ResponseEntity.ok(postingService.detail(param));
-    }
-
     @PutMapping("")
-    public ResponseEntity<Void> update(@RequestBody PostingDto.UpdateRequestDto param) {
-
+    public ResponseEntity<Void> update(@RequestBody PostingDto.UpdateReqDto param) {
         postingService.update(param);
         return ResponseEntity.ok().build();
     }
-
     @DeleteMapping("")
-    public ResponseEntity<Void> delete(@RequestBody PostingDto.UpdateRequestDto param) {
+    public ResponseEntity<Void> delete(@RequestBody PostingDto.UpdateReqDto param) {
         postingService.delete(param);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("")
+    public ResponseEntity<PostingDto.DetailResDto> detail(DefaultDto.DetailReqDto param) {
+        return ResponseEntity.ok(postingService.detail(param));
+    }
+    @GetMapping("/list")
+    public ResponseEntity<List<PostingDto.DetailResDto>> list(PostingDto.ListReqDto param) {
+        return ResponseEntity.ok(postingService.list(param));
     }
 }

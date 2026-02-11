@@ -5,13 +5,16 @@ import com.demo.dto.PostingDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public interface PostingService {
-     public DefaultDto.CreateResponseDto create(PostingDto.CreateRequestDto param);
-     public void update(PostingDto.UpdateRequestDto param   );
-     public void delete(PostingDto.UpdateRequestDto param);
-     public PostingDto.DetailResponseDto detail(DefaultDto.DetailRequestDto param);
-     public List<PostingDto.DetailResponseDto> list();
+    /**/
+    DefaultDto.CreateResDto create(PostingDto.CreateReqDto param);
+    void update(PostingDto.UpdateReqDto param);
+    void delete(PostingDto.UpdateReqDto param);
+    PostingDto.DetailResDto detail(DefaultDto.DetailReqDto param);
+    List<PostingDto.DetailResDto> list(PostingDto.ListReqDto param);
+    DefaultDto.PagedListResDto pagedList(PostingDto.PagedListReqDto param);
+    List<PostingDto.DetailResDto> scrolledList(PostingDto.ScrolledListReqDto param);
+
 }
